@@ -17,6 +17,9 @@ export default function ProductsContent() {
   const [total, setTotal] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
   const scrollLock = useRef(0);
+  const prevCategory = useRef<string | undefined>('__init__');
+  const prevSortBy = useRef<string | undefined>('__init__');
+  const prevSearch = useRef<string | undefined>('__init__');
 
   const [filters, setFilters] = useState<Filters>({
     category: searchParams.get('category') || undefined,
@@ -36,7 +39,19 @@ export default function ProductsContent() {
   }, [searchParams]);
 
   const fetchProducts = useCallback(async () => {
-    scrollLock.current = window.scrollY;
+    const isNewNav = prevCategory.current !== filters.category ||
+                     prevSortBy.current !== filters.sortBy ||
+                     prevSearch.current !== filters.search;
+    prevCategory.current = filters.category;
+    prevSortBy.current = filters.sortBy;
+    prevSearch.current = filters.search;
+
+    if (isNewNav) {
+      window.scrollTo(0, 0);
+      scrollLock.current = 0;
+    } else {
+      scrollLock.current = window.scrollY;
+    }
     setLoading(true);
     try {
       const { getProducts } = await import('@/lib/firebase/db');
