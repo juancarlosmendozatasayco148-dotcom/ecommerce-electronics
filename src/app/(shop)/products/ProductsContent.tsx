@@ -17,6 +17,7 @@ export default function ProductsContent() {
   const [total, setTotal] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
   const scrollLock = useRef(0);
+  const isFirstLoad = useRef(true);
   const prevCategory = useRef<string | undefined>('__init__');
   const prevSortBy = useRef<string | undefined>('__init__');
   const prevSearch = useRef<string | undefined>('__init__');
@@ -64,9 +65,14 @@ export default function ProductsContent() {
   }, [filters]);
 
   useLayoutEffect(() => {
-    if (!loading && scrollLock.current > 0) {
-      window.scrollTo(0, scrollLock.current);
-      scrollLock.current = 0;
+    if (!loading) {
+      if (isFirstLoad.current) {
+        window.scrollTo(0, 0);
+        isFirstLoad.current = false;
+      } else if (scrollLock.current > 0) {
+        window.scrollTo(0, scrollLock.current);
+        scrollLock.current = 0;
+      }
     }
   }, [loading]);
 
