@@ -187,7 +187,7 @@ export default function CheckoutPage() {
 
           <Card className="mb-6">
             <CardContent className="pt-6 text-center">
-              <div className="w-64 h-64 mx-auto mb-4 bg-white rounded-xl flex items-center justify-center p-4">
+              <div className="w-64 h-64 mx-auto mb-4 bg-white dark:bg-zinc-800 rounded-xl flex items-center justify-center p-4">
                 <img
                   src="/yape-qr.jpeg"
                   alt="Código QR Yape"
@@ -226,7 +226,7 @@ export default function CheckoutPage() {
                   </Button>
                   <Button
                     type="button"
-                    className="w-full bg-[#9fab26] hover:bg-[#8c991f] text-black"
+                    className="w-full bg-[#9fab26] hover:bg-[#8c991f] text-black dark:text-white"
                     onClick={submitProof}
                     disabled={proofUploading}
                   >

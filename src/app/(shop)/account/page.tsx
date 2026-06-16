@@ -97,7 +97,7 @@ export default function AccountPage() {
                   <button
                     onClick={() => fileRef.current?.click()}
                     disabled={photoUploading}
-                    className="absolute -bottom-1 -right-1 p-1.5 rounded-full bg-[#9fab26] text-black hover:bg-[#8c991f] transition-colors disabled:opacity-50"
+                    className="absolute -bottom-1 -right-1 p-1.5 rounded-full bg-[#9fab26] text-black dark:text-white hover:bg-[#8c991f] transition-colors disabled:opacity-50"
                     title="Cambiar foto"
                   >
                     {photoUploading ? (

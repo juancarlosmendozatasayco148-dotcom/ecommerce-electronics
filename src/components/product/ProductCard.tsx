@@ -82,7 +82,7 @@ export default function ProductCard({ product, priority = false, index = 0 }: Pr
                 'h-3 w-3',
                 i < Math.round(product.rating)
                   ? 'fill-[#f4ed0b] text-[#f4ed0b]'
-                  : 'text-zinc-700'
+                  : 'text-zinc-700 dark:text-zinc-600'
               )}
             />
           ))}

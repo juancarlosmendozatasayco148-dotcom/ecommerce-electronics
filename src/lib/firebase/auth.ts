@@ -5,6 +5,8 @@ import {
   onAuthStateChanged,
   GoogleAuthProvider,
   signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   updateProfile,
   User as FirebaseUser,
 } from 'firebase/auth';
@@ -35,18 +37,38 @@ export async function signIn(email: string, password: string) {
 
 export async function signInWithGoogle() {
   const provider = new GoogleAuthProvider();
-  const cred = await signInWithPopup(auth, provider);
-  const userDoc = await getDoc(doc(db, 'users', cred.user.uid));
+  provider.setCustomParameters({ prompt: 'select_account' });
+  try {
+    const cred = await signInWithPopup(auth, provider);
+    await createUserDocIfNeeded(cred.user);
+    return cred.user;
+  } catch (error: any) {
+    if (error.code === 'auth/popup-blocked') {
+      await signInWithRedirect(auth, provider);
+      return null;
+    }
+    throw error;
+  }
+}
+
+async function createUserDocIfNeeded(user: FirebaseUser) {
+  const userDoc = await getDoc(doc(db, 'users', user.uid));
   if (!userDoc.exists()) {
-    await setDoc(doc(db, 'users', cred.user.uid), {
-      name: cred.user.displayName,
-      email: cred.user.email,
-      photoURL: cred.user.photoURL,
+    await setDoc(doc(db, 'users', user.uid), {
+      name: user.displayName,
+      email: user.email,
+      photoURL: user.photoURL,
       role: 'user',
       createdAt: serverTimestamp(),
     });
   }
-  return cred.user;
+}
+
+export async function handleGoogleRedirect(): Promise<FirebaseUser | null> {
+  const result = await getRedirectResult(auth);
+  if (!result) return null;
+  await createUserDocIfNeeded(result.user);
+  return result.user;
 }
 
 export async function logout() {

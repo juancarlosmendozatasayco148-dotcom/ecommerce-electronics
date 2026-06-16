@@ -45,7 +45,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           <div className="flex items-center gap-2 mt-4">
             <div className="flex items-center">
               {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} className={cn('h-4 w-4', i < Math.round(product.rating) ? 'fill-[#f4ed0b] text-[#f4ed0b]' : 'text-zinc-700')} />
+                <Star key={i} className={cn('h-4 w-4', i < Math.round(product.rating) ? 'fill-[#f4ed0b] text-[#f4ed0b]' : 'text-zinc-700 dark:text-zinc-600')} />
               ))}
             </div>
             <span className="text-sm text-zinc-500">({product.reviewCount} reseñas)</span>
