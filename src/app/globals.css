@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -17,20 +19,8 @@
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #121212;
-}
-
-:root:has(#\:Racq:checked) {
-  --background: #ffffff;
-  --foreground: #121212;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #121212;
-    --foreground: #fafbfc;
-  }
+  --background: #121212;
+  --foreground: #fafbfc;
 }
 
 html {

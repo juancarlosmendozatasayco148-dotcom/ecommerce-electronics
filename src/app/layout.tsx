@@ -26,8 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`${dmSerif.variable} ${inter.variable}`}>
-      <body className="min-h-screen bg-white dark:bg-dark text-[#292525] dark:text-[#fafbfc] antialiased">
+    <html lang="es" className={`${dmSerif.variable} ${inter.variable} dark`}>
+      <body className="min-h-screen bg-[#121212] text-[#fafbfc] antialiased">
         <AuthProvider>
           {children}
           <Toaster />
